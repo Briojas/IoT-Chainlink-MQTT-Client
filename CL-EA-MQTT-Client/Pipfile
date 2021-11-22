@@ -1,0 +1,14 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+
+[packages]
+paho-mqtt = "==1.6.1"
+Flask = "==1.1.1"
+
+[requires]
+python_version = "3.7"
