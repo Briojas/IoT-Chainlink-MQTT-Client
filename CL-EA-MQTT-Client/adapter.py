@@ -6,14 +6,6 @@ from bridge import Bridge
 class Adapter:
     bridges = [
         Bridge(
-            'broker.emqx.io', 
-            1883,
-        ),
-        Bridge(
-            'test.mosquitto.org', 
-            1883
-        ),
-        Bridge(
             'broker.hivemq.com', 
             1883
         )
