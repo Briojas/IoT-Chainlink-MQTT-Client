@@ -81,6 +81,7 @@ void setup() {
     //posting score data from rfid readings
   pubs[0].topic = "/" + deviceName + "/tag";
   pubs[0].qos = 2; 
+  pubs[0].retained = true;
                 //$$ connect $$//
   rfid_mqtt_client.connect(clientName);
 ///////////////   Time   ///////////////

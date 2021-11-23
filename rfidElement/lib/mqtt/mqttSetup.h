@@ -12,7 +12,7 @@ struct mqtt_pubSubDef_t {
     String topic; //topic being subscribed to or published on
     String payload; //Storage of data to be published or of data subscribed to
     int qos = 0; //quality of service (qos) level (default 0)
-    bool retained = false; //Currently not supported by Shiftr.io Only applies to published messages
+    bool retained = false; //should published message be kept and provided to new subscribing clients
 };
 
 //$$ Classes & Functions $$//
@@ -28,8 +28,8 @@ class MQTT_Client_Handler {
             //last will and testament defaults. 
         char lwt_topic[20] = "/lastWill"; //lwt topic. device's name will be appended to front.
         char lwt_payload[20] = "connection lost";
-        bool lwt_retained = false;
-        int lwt_qos = 0;
+        bool lwt_retained = true;
+        int lwt_qos = 2;
             //keep alive interval (seconds)
         int keepAlive = 10;
             //session retention on the broker side
