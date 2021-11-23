@@ -5,7 +5,7 @@ Establishes client connection to MQTT 3.1.1 Broker
 
 //$$ Libraries $$//
 #include <MQTT.h>
-#include <WiFi.h> //needed for WiFiClient
+#include <WiFi.h> //needed for WiFiClient references
 
 //$$ Structs $$//
 struct mqtt_pubSubDef_t {

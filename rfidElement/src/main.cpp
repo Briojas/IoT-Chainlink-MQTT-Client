@@ -29,11 +29,9 @@ String currentProfile;
 
 //WiFi
 #include <wifiSetup.h>
+#include <wifiLogin.h>
 WiFiClient wifi_client;
-//const char wifiName[] = "Ponderosa";
-//const char wifiPW[] = "Zaq12wsx";
-const char wifiName[] = "NPS_Devices";
-const char wifiPW[] = "FourScoreAnd7YearsAgo";
+
 
 
 //MQTT
@@ -58,7 +56,7 @@ void readSubs(String &topic, String &payload){
 //General inits and defs
 MQTT_Client_Handler rfid_mqtt_client(mqtt_client, wifi_client, brokerName, subs, numSubs, readSubs); //initialize the mqtt handler
 void checkAndPublishTag();
-void updateLEDs();
+void updateLEDs(int numToShow);
 String getTimestamp();
 
 
@@ -78,6 +76,7 @@ void setup() {
                 //$$ SUBS $$//
     //listening to broker status
   subs[0].topic = "/" + deviceName + "/LEDs"; 
+  subs[2].qos = 2;
                 //$$ PUBS $$//
     //posting score data from rfid readings
   pubs[0].topic = "/" + deviceName + "/tag";
@@ -117,9 +116,7 @@ void checkAndPublishTag(){
 }
 
 void updateLEDs(int numToShow){
-    if(numToShow >= NUM_LEDS){
-      numToShow = NUM_LEDS;
-    }
+    numToShow = numToShow % NUM_LEDS;
     for(int i = 0; i < numToShow; i++){
       leds[i] = CRGB::BlueViolet;
     }
