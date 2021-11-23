@@ -40,9 +40,7 @@ const char wifiPW[] = "FourScoreAnd7YearsAgo";
 #include <mqttSetup.h>
 MQTTClient mqtt_client;
 const char clientName[] = "rfidElement";
-const char brokerName[] = "modified.cloud.shiftr.io";
-const char brokerLogin[] = "modified";
-const char brokerPW[] = "zaq12wsxcde34rfv";
+const char brokerName[] = "broker.hivemq.com";
 const int numPubs = 1;
 mqtt_pubSubDef_t pubs[numPubs];
 const int numSubs = 1;
@@ -79,23 +77,23 @@ void setup() {
   String deviceName = clientName; //converting const char to str
                 //$$ SUBS $$//
     //listening to broker status
-  subs[0].topic = "/LEDs"; 
+  subs[0].topic = "/" + deviceName + "/LEDs"; 
                 //$$ PUBS $$//
     //posting score data from rfid readings
   pubs[0].topic = "/" + deviceName + "/tag";
   pubs[0].qos = 2; 
                 //$$ connect $$//
-  rfid_mqtt_client.connect(clientName, brokerLogin, brokerPW);
+  rfid_mqtt_client.connect(clientName);
 ///////////////   Time   ///////////////
   configTime(-5 * 3600, 0, timeServer1, timeServer2, timeServer3);
 }
 
 void loop() {
   if(!rfid_mqtt_client.loop()){
-    rfid_mqtt_client.connect(clientName, brokerLogin, brokerPW);
+    rfid_mqtt_client.connect(clientName);
   }
-
   checkAndPublishTag();
+  updateLEDs(subs[0].payload.toInt());
 }
 
 void checkAndPublishTag(){
@@ -118,9 +116,15 @@ void checkAndPublishTag(){
   delay(250); //TODO: determine correct delay
 }
 
-void updateLEDs(){
-    for(int i = 0; i < NUM_LEDS; i++){
+void updateLEDs(int numToShow){
+    if(numToShow >= NUM_LEDS){
+      numToShow = NUM_LEDS;
+    }
+    for(int i = 0; i < numToShow; i++){
       leds[i] = CRGB::BlueViolet;
+    }
+    for(int i = numToShow + 1; i < NUM_LEDS; i++){
+      leds[i] = CRGB::Black;
     }
     FastLED.show();
 }

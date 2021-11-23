@@ -49,11 +49,11 @@ class MQTT_Client_Handler {
     Outputs:  
         None
     */
-        MQTT_Client_Handler(MQTTClient &_mqttClient, Client &_wifiClient, const char brokerName[], mqtt_pubSubDef_t *_subs, int _numSubs, MQTTClientCallbackSimple callback);
+        MQTT_Client_Handler(MQTTClient &_mqttClient, Client &_wifiClient, const char brokerName[], mqtt_pubSubDef_t *_subs, int _numSubs, MQTTClientCallbackSimple callback, int port = 1883);
 
     /*
     Inputs: 
-        const char clientName[] - name of this device as it will appear in the broker
+        const char deviceName[] - name of this device as it will appear in the broker
         const char brokerLogin[] - login username for the cloud mqtt service
         const char brokerPW[] - login password for the cloud mqtt service
         MQTTClient &mqttClient - mqtt client itself that connects to the broker
@@ -62,17 +62,18 @@ class MQTT_Client_Handler {
     Outputs:
         None. mqtt_client.connected() will be used to determine connection status to the broker. 
     */
-        void connect(const char clientName[], const char brokerLogin[], const char brokerPW[]);
+        void connect(const char deviceName[]);
+        void connect(const char deviceName[], const char brokerLogin[], const char brokerPW[]);
 
     /*
     Inputs: 
-        mqtt_subDef_t message - a message with a payload that is ready to be published
+        const char deviceName[] - name of this device as it will appear in the broker
     Purpose:
-        Submits the message to the broker for publishing.
+        Sets last will and testament of device
     Outputs:  
         None
     */
-        void publish(mqtt_pubSubDef_t message);
+        void set_options(const char deviceName[]);
 
     /*
     Inputs: 
@@ -84,4 +85,24 @@ class MQTT_Client_Handler {
         False - client is currently disconnected and needs to reconnect
     */
         bool loop();
+
+    /*
+    Inputs: 
+        mqtt_subDef_t message - a message with a payload that is ready to be published
+    Purpose:
+        Submits the message to the broker for publishing.
+    Outputs:  
+        None
+    */
+        void publish(mqtt_pubSubDef_t message);
+    
+    /*
+    Inputs: 
+        None, subs and their latest callback data are stored within the client
+    Purpose:
+        Subscribes to topics on the broker specified with the qos specified in the constructor
+    Outputs:  
+        None
+    */
+        void subscribe();
 };
