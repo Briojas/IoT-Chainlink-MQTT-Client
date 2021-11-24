@@ -5,10 +5,18 @@ from bridge import Bridge
 
 class Adapter:
     bridges = [
+        # Bridge(
+        #     'broker.emqx.io', 
+        #     1883,
+        # ),
         Bridge(
-            'broker.hivemq.com', 
+            'test.mosquitto.org', 
             1883
-        )
+        ),
+        # Bridge(
+        #     'broker.hivemq.com', 
+        #     1883
+        # )
     ]
     action_list = ['subscribe', 'publish']
     action = ''

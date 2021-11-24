@@ -63,6 +63,7 @@ class MQTT_Client_Handler {
         None. mqtt_client.connected() will be used to determine connection status to the broker. 
     */
         void connect(const char deviceName[]);
+        void connect(const char deviceName[], const char brokerLogin[]);
         void connect(const char deviceName[], const char brokerLogin[], const char brokerPW[]);
 
     /*

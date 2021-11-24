@@ -1,11 +1,11 @@
 #include <mqttSetup.h>
 #include <Arduino.h>
 
-MQTT_Client_Handler::MQTT_Client_Handler(MQTTClient &_mqttClient, Client &_wifiClient, const char brokerName[], mqtt_pubSubDef_t *_subs, int _numSubs, MQTTClientCallbackSimple callback, int port){
+MQTT_Client_Handler::MQTT_Client_Handler(MQTTClient &_mqttClient, Client &_wifiClient, const char brokerName[], mqtt_pubSubDef_t *_subs, int _numSubs, MQTTClientCallbackSimple callback, int _port){
     this->mqttClient = &_mqttClient;
     this->subs = _subs;
     this->numSubs = _numSubs;
-    this->mqttClient->begin(brokerName, port, _wifiClient);
+    this->mqttClient->begin(brokerName, _port, _wifiClient);
     this->mqttClient->onMessage(callback);
 }
 
@@ -17,13 +17,15 @@ void MQTT_Client_Handler::connect(const char deviceName[], const char brokerLogi
         //addressing advanced settings
     this->set_options(deviceName);
         //connect to broker
-    Serial.println("connecting...");
     if(brokerLogin == nullptr || brokerPW == nullptr){
+        Serial.print("connecting to public broker...");
         while(!this->mqttClient->connect(deviceName)){
             Serial.print(".");
+            Serial.print(this->mqttClient->lastError());
             delay(1000);
         }
     }else{
+        Serial.print("connecting to broker via user/key...");
         while(!this->mqttClient->connect(deviceName, brokerLogin, brokerPW)){
             Serial.print(".");
             delay(1000);

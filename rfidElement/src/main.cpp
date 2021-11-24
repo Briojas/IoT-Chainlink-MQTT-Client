@@ -38,7 +38,7 @@ WiFiClient wifi_client;
 #include <mqttSetup.h>
 MQTTClient mqtt_client;
 const char clientName[] = "rfidElement";
-const char brokerName[] = "broker.hivemq.com";
+const char brokerName[] = "test.mosquitto.org";
 const int numPubs = 1;
 mqtt_pubSubDef_t pubs[numPubs];
 const int numSubs = 1;
@@ -76,7 +76,7 @@ void setup() {
                 //$$ SUBS $$//
     //listening to broker status
   subs[0].topic = "/" + deviceName + "/LEDs"; 
-  subs[2].qos = 2;
+  subs[0].qos = 2;
                 //$$ PUBS $$//
     //posting score data from rfid readings
   pubs[0].topic = "/" + deviceName + "/tag";
