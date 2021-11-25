@@ -32,13 +32,11 @@ String currentProfile;
 #include <wifiLogin.h>
 WiFiClient wifi_client;
 
-
-
 //MQTT
 #include <mqttSetup.h>
+#include <mqttLogin.h>
 MQTTClient mqtt_client;
 const char clientName[] = "rfidElement";
-const char brokerName[] = "test.mosquitto.org";
 const int numPubs = 1;
 mqtt_pubSubDef_t pubs[numPubs];
 const int numSubs = 1;
@@ -83,14 +81,14 @@ void setup() {
   pubs[0].qos = 2; 
   pubs[0].retained = true;
                 //$$ connect $$//
-  rfid_mqtt_client.connect(clientName);
+  rfid_mqtt_client.connect(clientName, brokerLogin, brokerPW);
 ///////////////   Time   ///////////////
   configTime(-5 * 3600, 0, timeServer1, timeServer2, timeServer3);
 }
 
 void loop() {
   if(!rfid_mqtt_client.loop()){
-    rfid_mqtt_client.connect(clientName);
+    rfid_mqtt_client.connect(clientName, brokerLogin, brokerPW);
   }
   checkAndPublishTag();
   updateLEDs(subs[0].payload.toInt());

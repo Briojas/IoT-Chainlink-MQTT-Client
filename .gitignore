@@ -1,4 +1,13 @@
 __pycache__/
 package/
 *.zip
-CL-EA-MQTT-Client/dirtytest.py
+.env
+
+#rfidElement
+rfidElement/.pio
+rfidElement/.vscode/.browse.c_cpp.db*
+rfidElement/.vscode/c_cpp_properties.json
+rfidElement/.vscode/launch.json
+rfidElement/.vscode/ipch
+rfidElement/lib/wifi/wifiLogin.h
+rfidElement/lib/mqtt/mqttLogin.h
