@@ -1,22 +1,20 @@
-import statistics
-
-from attr import validate
 from bridge import Bridge
+import statistics
+import os
+from dotenv import load_dotenv
 
 class Adapter:
+    load_dotenv()
+    private_broker_hivemq = str(os.environ['PRIVATE_BROKER_HIVEMQ'])
+    hivemq_client_user = str(os.environ['HIVEMQ_CLIENT_USER'])
+    hivemq_client_key = str(os.environ['HIVEMQ_CLIENT_KEY'])
     bridges = [
-        # Bridge(
-        #     'broker.emqx.io', 
-        #     1883,
-        # ),
         Bridge(
-            'test.mosquitto.org', 
-            1883
-        ),
-        # Bridge(
-        #     'broker.hivemq.com', 
-        #     1883
-        # )
+            private_broker_hivemq, 
+            8883,
+            hivemq_client_user,
+            hivemq_client_key
+        )
     ]
     action_list = ['subscribe', 'publish']
     action = ''
@@ -113,13 +111,19 @@ class Adapter:
                     string = value['value']
                     count = value['count']
             measurement = {
-                'value': string,
+                'value': str(string),
                 'agreed': count/len(values),
                 'reporting': len(values)/len(self.bridges)
             }
         else:
+            mode = statistics.mode(values)
+            median = statistics.median(values)
+            if median == mode:
+                output = mode
+            else:
+                output = median
             measurement = {
-                'value': statistics.median(values),
+                'value': output,
                 'stdev': statistics.stdev(values),
                 'variance': statistics.variance(values),
                 'reporting': len(values)/len(self.bridges)

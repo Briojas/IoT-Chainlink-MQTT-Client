@@ -11,3 +11,8 @@ rfidElement/.vscode/launch.json
 rfidElement/.vscode/ipch
 rfidElement/lib/wifi/wifiLogin.h
 rfidElement/lib/mqtt/mqttLogin.h
+
+#CL-EA-MQTT-CLIENT
+CL-EA-MQTT-CLIENT/.env
+CL-EA-MQTT-CLIENT/quick_test.py
+CL-EA-MQTT-CLIENT/package/
