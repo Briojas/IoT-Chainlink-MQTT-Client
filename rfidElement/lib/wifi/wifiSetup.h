@@ -4,8 +4,8 @@ Creates, or connects to, an access Point
 */        
 
 //$$ Libraries $$//
-#include <WiFi.h>
-
+#include <WiFiClient.h>
+#include <WiFiClientSecure.h>
 //$$ Functions $$//
     /*Inputs: 
         accessPointName     - name of soft access point

@@ -28,6 +28,7 @@ void MQTT_Client_Handler::connect(const char deviceName[], const char brokerLogi
         Serial.print("connecting to broker via user/key...");
         while(!this->mqttClient->connect(deviceName, brokerLogin, brokerPW)){
             Serial.print(".");
+            Serial.print(this->mqttClient->lastError());
             delay(1000);
         }
     }

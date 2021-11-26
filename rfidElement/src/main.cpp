@@ -30,12 +30,15 @@ String currentProfile;
 //WiFi
 #include <wifiSetup.h>
 #include <wifiLogin.h>
-WiFiClient wifi_client;
+//TODO: Manage secure vs not-secure wifi_client selection based on MQTT port selection
+// WiFiClient wifi_client;
+WiFiClientSecure wifi_client;
 
 //MQTT
 #include <mqttSetup.h>
 #include <mqttLogin.h>
 MQTTClient mqtt_client;
+const int port = 8883;
 const char clientName[] = "rfidElement";
 const int numPubs = 1;
 mqtt_pubSubDef_t pubs[numPubs];
@@ -52,7 +55,7 @@ void readSubs(String &topic, String &payload){
 }
 
 //General inits and defs
-MQTT_Client_Handler rfid_mqtt_client(mqtt_client, wifi_client, brokerName, subs, numSubs, readSubs); //initialize the mqtt handler
+MQTT_Client_Handler rfid_mqtt_client(mqtt_client, wifi_client, brokerName, subs, numSubs, readSubs, port); //initialize the mqtt handler
 void checkAndPublishTag();
 void updateLEDs(int numToShow);
 String getTimestamp();
@@ -69,6 +72,7 @@ void setup() {
   FastLED.setBrightness(BRIGHTNESS);
 ///////////////   WiFi   ///////////////
   wifi_init(wifiName, wifiPW);
+  wifi_client.setInsecure(); //TODO: only call when WiFiClientSecure used
 ///////////////   MQTT   ///////////////
   String deviceName = clientName; //converting const char to str
                 //$$ SUBS $$//

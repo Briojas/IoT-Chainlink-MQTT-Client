@@ -49,7 +49,7 @@ class MQTT_Client_Handler {
     Outputs:  
         None
     */
-        MQTT_Client_Handler(MQTTClient &_mqttClient, Client &_wifiClient, const char brokerName[], mqtt_pubSubDef_t *_subs, int _numSubs, MQTTClientCallbackSimple callback, int port = 1883);
+        MQTT_Client_Handler(MQTTClient &_mqttClient, Client &_wifiClient, const char brokerName[], mqtt_pubSubDef_t *_subs, int _numSubs, MQTTClientCallbackSimple callback, const int port = 1883);
 
     /*
     Inputs: 
