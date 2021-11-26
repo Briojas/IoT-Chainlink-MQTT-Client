@@ -112,6 +112,7 @@ void checkAndPublishTag(){
 
     //publish the uid read at the timestamp
   uid.toUpperCase();
+  Serial.print(uid);
   pubs[0].payload = uid + " @" + getTimestamp();
   rfid_mqtt_client.publish(pubs[0]);
     //wait a quarter second before reading and publishing another tag uid  
@@ -119,11 +120,11 @@ void checkAndPublishTag(){
 }
 
 void updateLEDs(int numToShow){
-    numToShow = numToShow % NUM_LEDS;
+    numToShow = numToShow % (NUM_LEDS + 1);
     for(int i = 0; i < numToShow; i++){
       leds[i] = CRGB::BlueViolet;
     }
-    for(int i = numToShow + 1; i < NUM_LEDS; i++){
+    for(int i = numToShow; i < NUM_LEDS; i++){
       leds[i] = CRGB::Black;
     }
     FastLED.show();
