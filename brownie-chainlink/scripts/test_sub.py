@@ -5,6 +5,7 @@ from scripts.helpful_scripts import fund_with_link, get_account
 def main():
     account = get_account()
     mqtt_client = MQTTClient[-1]
+
     tx = fund_with_link(
         mqtt_client.address, amount=config["networks"][network.show_active()]["fee"]
     )

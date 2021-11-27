@@ -151,6 +151,7 @@ class Adapter:
         self.error = True
         self.result = {
             'jobRunID': self.id,
+            'input': self.request_data[0],
             'status': 'errored',
             'error': error,
             'statusCode': 500,
