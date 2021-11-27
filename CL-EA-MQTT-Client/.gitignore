@@ -1,0 +1,5 @@
+__pycache__/
+package/
+*.zip
+.env
+quick_test.py
