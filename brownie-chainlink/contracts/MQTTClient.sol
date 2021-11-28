@@ -7,7 +7,7 @@ import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
 contract MQTTClient is ChainlinkClient, ConfirmedOwner{
     using Chainlink for Chainlink.Request;
     string public data_string;
-    int256 public data_int;
+    uint256 public data_int;
     //uint256 public data_float;
     uint256 public counter;
     
@@ -29,7 +29,7 @@ contract MQTTClient is ChainlinkClient, ConfirmedOwner{
         jobId_strings = "18233b7ffdc146f6844750fec67b3453";
         jobId_ints =    "f485e865867047e3a6b6eefde9b3a600";
         //jobId_floats = _jobId;
-        fee = 1 * LINK_DIVISIBILITY;
+        fee = 1 * 10 ** 18;
         counter = 0;
     }
     
@@ -54,7 +54,7 @@ contract MQTTClient is ChainlinkClient, ConfirmedOwner{
     function sub_int(string calldata _action, string calldata _topic, int16 _qos) public onlyOwner returns (bytes32 requestId){return pub_int(_action, _topic, _qos, 0, 1);}
     function pub_int(string calldata _action, string calldata _topic, int16 _qos, int256 _payload, int16 _retain) public onlyOwner returns (bytes32 requestId) 
     {
-        Chainlink.Request memory request = buildChainlinkRequest(jobId_ints, address(this), this.fulfill_string.selector);
+        Chainlink.Request memory request = buildChainlinkRequest(jobId_ints, address(this), this.fulfill_int.selector);
         
         // Set the params for the external adapter
         request.add("action", _action); //options: "publish", "subscribe"
@@ -76,16 +76,16 @@ contract MQTTClient is ChainlinkClient, ConfirmedOwner{
         counter = counter + 1;
         data_string = _returnString;
     }
-    function fulfill_int(bytes32 _requestId, int256 _returnInt) public recordChainlinkFulfillment(_requestId)
+    function fulfill_int(bytes32 _requestId, uint256 returnInt) public recordChainlinkFulfillment(_requestId)
     {
         counter = counter + 1;
-        data_int = _returnInt;
+        data_int = returnInt;
     }
 
     function get_string() public view returns (string memory){
         return data_string;
     }
-    function get_int() public view returns (int256){
+    function get_int() public view returns (uint256){
         return data_int;
     }
 

@@ -11,13 +11,13 @@ def main():
     )
     tx.wait(1)
     print(mqtt_client.address)
-    request_tx = mqtt_client.pub_string(
+    request_tx = mqtt_client.pub_int(
         'publish',
-        '/smart-contract-client/test',
-        0,
-        'testMessage',
+        '/rfidElement/LEDs',
+        2,
+        11,
         1,
         {"from": account}
     )
     request_tx.wait(1)
-    print(mqtt_client.get_string())
+    # print(mqtt_client.get_string())
