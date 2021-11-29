@@ -9,7 +9,6 @@ contract MQTTClient is ChainlinkClient, ConfirmedOwner{
     string public data_string;
     uint256 public data_int;
     //uint256 public data_float;
-    uint256 public counter;
     
     address private oracle;
     bytes32 private jobId_strings;
@@ -30,7 +29,6 @@ contract MQTTClient is ChainlinkClient, ConfirmedOwner{
         jobId_ints =    "f485e865867047e3a6b6eefde9b3a600";
         //jobId_floats = _jobId;
         fee = 1 * 10 ** 18;
-        counter = 0;
     }
     
     /**
@@ -73,12 +71,10 @@ contract MQTTClient is ChainlinkClient, ConfirmedOwner{
      */ 
     function fulfill_string(bytes32 _requestId, string calldata _returnString) public recordChainlinkFulfillment(_requestId)
     {
-        counter = counter + 1;
         data_string = _returnString;
     }
     function fulfill_int(bytes32 _requestId, uint256 returnInt) public recordChainlinkFulfillment(_requestId)
     {
-        counter = counter + 1;
         data_int = returnInt;
     }
 
