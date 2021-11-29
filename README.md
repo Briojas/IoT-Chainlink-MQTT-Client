@@ -2,9 +2,9 @@
 *2021 Fall Chainlink Hackathon*
 
 # Key Features
-Chainlink External Adapter MQTT Client template
-Ethereum Smart Contract MQTT Client template
-IoT device template 
+- Chainlink External Adapter MQTT Client template
+- Ethereum Smart Contract MQTT Client template
+- IoT device template 
 
 ## Inspiration
 The Fall 2020 Chainlink Hackathon Best Open Project winner [The Open Library Project](https://devpost.com/software/the-open-library-project) really got my gears turning. There happens to be a "Little Free Library" location right by a park my wife and I walk our dog weekly, and I'm reminded of Aram's project every time we pass it. His use of an IoT device, capturing its output through an external adapter, and executing a Smart Contract on that data, was the primary inspiration for this project. 
